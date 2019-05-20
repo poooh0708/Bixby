@@ -36,4 +36,25 @@
 
 ```
 
+## collect
 
+```
+* input 적는 순서가 evaluate 의 순서임 *
+
+1. computed-input (<type>)
+: 뭔가 other input으로부터 온거 ... 인듯?
+>computed-input (deliveryAddress) {
+      type (DeliveryAddress)
+      min (Required) max (One)
+      compute {
+        if (exists(deliveryAddress)) {
+          value: $expr(deliveryAddress)
+        }
+      }
+      
+2. 
+
+
+
+
+```
