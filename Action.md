@@ -38,12 +38,13 @@
 
 ## collect
 
-```
-* input 적는 순서가 evaluate 의 순서임 *
+*input순서 계산 순서*
 
 1. computed-input (<type>)
-: 뭔가 other input으로부터 온거 ... 인듯?
->computed-input (deliveryAddress) {
+
+```
+뭔가 other input으로부터 온거 ... 인듯?
+computed-input (deliveryAddress) {
       type (DeliveryAddress)
       min (Required) max (One)
       compute {
@@ -52,9 +53,77 @@
         }
       }
       
-2. 
+```
 
+2. input
 
+```
+input (%name%) {
+      type (%type%)     ==> input의 type
+      min (%Fmin-cardinality%)
+      max (%max-cardinality%)
+      prompt-behavior (%prompt-behavior%)
+      instantiation-behavior (%instantiation-behavior%)
+      plan-behavior (%plan-behavior%)
+      hidden      ==> Hide this input from function implementations
+      related-values (%related-value%)
+      [iterable]
+      validate {
+        %validation%
+      }
+      default-init {    ==> input이나 variable type의 default value.
+        intent{   ==> A set of signals that the Bixby planner interprets to create a plan.
+          goal: %goal%
+          ...
+        }
+      }
+    }
+   
+```
+
+3. inputgroup
+
+```
+input-group (countryCode) {
+
+       // require at least either a two letter country code (e.g. 'US') or a three letter country code (e.g. 'USA')
+       requires (OneOf)
+       collect {
+         input (two_letter_code) {
+           type (ISOCountryCode2)
+           min (Optional)
+         }
+         input (three_letter_code) {
+           type (ISOCountryCode3)
+           min (Optional)
+         }
+       }
+     }
+```
+
+# js
+## js API 연동
+
+*개념정리
+
+1. [capsule configuration](https://bixbydevelopers.com/dev/docs/reference/ref-topics/capsule-config)
+```
+capsule code editing 없이 바꾸고 싶은 configuration data를 저장하는 방법
+1) capsule.properties file
+2) Bixby Developer center
+
+==> API key 같은 것들 sensitive 해서 Secrets section 에 저장해라!
+Secrets are sensitive information that should not be stored in code and might need to be updated frequently, such as API keys or other authentication details. By entering these in the Secrets section of the Bixby Developer Center, they will be securely encrypted end-to-end, and will even appear obfuscated in the Developer Center's UI. Secrets can be updated at any time.
+
+Static, non-sensitive information that isn't likely to change often should be defined in the capsule.properties file. This could include endpoint URIs, permission scopes, and feature gates.
+
+By setting dynamic properties in the Config section of the Bixby Developer Center, you can change property values without editing capsule code. If you define capsule properties in the Developer Center with the same names as properties in the capsule.properties file, the dynamic values will override the static ones in the file. Delete these dynamic properties to return to the values defined in the file.
 
 
 ```
+
+2.
+     
+
+
+
